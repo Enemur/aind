@@ -80,10 +80,11 @@ ARG ANDROID_IMAGE_SHA256
 RUN curl --retry 10 -L -o /android.img $ANDROID_IMAGE \
     && echo $ANDROID_IMAGE_SHA256 /android.img | sha256sum --check
 
-ARG VNC_PASSWORD=password
-
 FROM ${BASE}
 ENV DEBIAN_FRONTEND=noninteractive
+
+ARG VNC_PASSWORD=password
+
 RUN apt-get update && \
   apt-get install -qq -y --no-install-recommends \
 # base system
