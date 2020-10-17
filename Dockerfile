@@ -44,6 +44,7 @@ RUN apt-get update && \
   libprotobuf-dev \
   libsdl2-dev \
   libsdl2-image-dev \
+  libsdl2-image-dev \
   libsystemd-dev \
   lxc-dev \
   pkg-config \
@@ -56,9 +57,7 @@ RUN git pull && git checkout ${ANBOX_COMMIT} && git submodule update --recursive
 COPY ./src/patches/anbox /patches
 
 COPY src/codec /anbox
-COPY src/root-adnroid.sh /anbox
-RUN chmod +x /anbox/root-adnroid.sh
-RUN /anbox/root-adnroid.sh
+COPY src/root-android.sh /anbox
 
 # `git am` requires user info to be set
 RUN git config user.email "nobody@example.com" && \
@@ -67,6 +66,9 @@ RUN git config user.email "nobody@example.com" && \
 # runopt = --mount=type=cache,id=aind-anbox,target=/build
 RUN ./scripts/build.sh && \
   cp -f ./build/src/anbox /anbox-binary
+
+RUN chmod +x /anbox/root-android.sh
+RUN /anbox/root-android.sh
 
 FROM ${BASE} AS android-img
 ENV DEBIAN_FRONTEND=noninteractive
