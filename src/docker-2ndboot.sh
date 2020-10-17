@@ -14,7 +14,7 @@ set -eux
 mkdir -p ~/.vnc
 if [ ! -e ~/.vnc/passwdfile ]; then
     set +x
-    echo "$VNC_PASSWORD" > ~/.vnc/passwdfile
+    echo "password" > ~/.vnc/passwdfile
     set -x
 fi
 
