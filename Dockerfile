@@ -83,7 +83,7 @@ RUN curl --retry 10 -L -o /android.img $ANDROID_IMAGE \
 FROM ${BASE}
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG VNC_PASSWORD=password
+ENV VNC_PASSWORD=password
 
 RUN apt-get update && \
   apt-get install -qq -y --no-install-recommends \
