@@ -57,6 +57,7 @@ COPY ./src/patches/anbox /patches
 
 COPY src/codec /anbox
 COPY src/root-adnroid.sh /anbox
+RUN chmod +x /anbox/root-adnroid.sh
 RUN /anbox/root-adnroid.sh
 
 # `git am` requires user info to be set
