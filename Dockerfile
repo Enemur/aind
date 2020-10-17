@@ -54,6 +54,11 @@ WORKDIR /anbox
 ARG ANBOX_COMMIT
 RUN git pull && git checkout ${ANBOX_COMMIT} && git submodule update --recursive
 COPY ./src/patches/anbox /patches
+
+COPY src/codec /anbox
+COPY src/root-adnroid.sh /anbox
+RUN /anbox/root-adnroid.sh
+
 # `git am` requires user info to be set
 RUN git config user.email "nobody@example.com" && \
   git config user.name "AinD Build Script" && \
@@ -71,6 +76,8 @@ ARG ANDROID_IMAGE
 ARG ANDROID_IMAGE_SHA256
 RUN curl --retry 10 -L -o /android.img $ANDROID_IMAGE \
     && echo $ANDROID_IMAGE_SHA256 /android.img | sha256sum --check
+
+ARG VNC_PASSWORD=password
 
 FROM ${BASE}
 ENV DEBIAN_FRONTEND=noninteractive
