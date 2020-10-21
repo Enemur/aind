@@ -1,3 +1,4 @@
+#!/bin/bash
 # Maintainer: Xnopyt <billy@xnopyt.info>
 # Contributor: Jack Chen <redchenjs@live.com>
 
