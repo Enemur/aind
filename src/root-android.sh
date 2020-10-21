@@ -1,21 +1,25 @@
-#!/bin/bash
-# Maintainer: Jack Chen <redchenjs@live.com>
+# Maintainer: Xnopyt <billy@xnopyt.info>
+# Contributor: Jack Chen <redchenjs@live.com>
 
-pkgname=anbox-image-gapps-rooted
+pkgname=anbox-image-gapps-rooted-xposed
 pkgver=2018.07.19
-pkgrel=7
-pkgdesc="Android image for running in Anbox with Houdini, OpenGApps and SuperSU"
-arch='x86_64'
+pkgrel=8
+pkgdesc="Android image for running in Anbox with Houdini, OpenGApps, SuperSU and Xposed Framework"
+arch=('x86_64')
 url="https://anbox.io/"
-license='custom'
+license=('custom')
 makedepends=(
-'curl'
-'lzip'
-'unzip'
-'squashfs-tools'
+    'curl'
+    'lzip'
+    'unzip'
+    'squashfs-tools'
 )
-provides=('anbox-image')
-conflicts=('anbox-image')
+provides=(
+    'anbox-image'
+)
+conflicts=(
+    'anbox-image'
+)
 _gapps_rel="$(curl -s -L https://api.opengapps.org/list | sed -r 's/.*-x86_64-7.1-pico-([0-9]+).zip".*/\1/')"
 _gapps_src="https://downloads.sourceforge.net/project/opengapps/x86_64/$_gapps_rel/open_gapps-x86_64-7.1-pico-$_gapps_rel.zip"
 _gapps_md5="$(curl -s -L $_gapps_src.md5 | sed -r 's/^([0-9a-z]+).*/\1/')"
@@ -30,17 +34,24 @@ source=(
     "https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_y.sfs"
     "https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_z.sfs"
     "http://supersuroot.org/downloads/SuperSU-v2.82-201705271822.zip"
+    "https://github.com/youling257/XposedTools/files/1931996/xposed-x86_64.zip"
+    "XposedInstaller_3.1.5.apk::https://forum.xda-developers.com/attachment.php?attachmentid=4393082&d=1516301692"
     "media_codecs.xml"
     "media_codecs_google_video.xml"
     "media_codecs_google_audio.xml"
     "media_codecs_google_telephony.xml"
     "$_gapps_src"
 )
+
+noextract=('XposedInstaller_3.1.5.apk')
+
 md5sums=(
     '26874452a6521ec2e37400670d438e33'
     '7ebf618b1af94a02322d9f2d2610090b'
     '5ca37e1629edb7d13b18751b72dc98ad'
     '8755c94775431f20bd8de368a2c7a179'
+    '86ffee229b724a8019cc78c5e221c24f'
+    '315362d994986e6584203fca282f4472'
     'a638728bc2413d908f5eb44a9f09e947'
     '599598e70060eb74c119cf7dac0ce466'
     '43193761081a04ca18a28d4a6e039950'
@@ -141,7 +152,7 @@ build () {
     echo 1 > ./squashfs-root/system/etc/.installed_su_daemon
 
     # install media codecs
-    cp codec/media_codec*.xml ./squashfs-root/system/etc/
+    cp media_codec*.xml ./squashfs-root/system/etc/
 
     # install gapps
     for i in ${_gapps_list[*]}; do
@@ -150,6 +161,28 @@ build () {
         tar --lzip -xvf ./Core/$i.tar.lz
         cp -r ./$i/nodpi/priv-app/* ./squashfs-root/system/priv-app/
     done
+
+    # install xposed
+    install -Dm 644 ./xposed.prop ./squashfs-root/system/xposed.prop
+    install -Dm 644 ./framework/XposedBridge.jar ./squashfs-root/system/framework/XposedBridge.jar
+    install -Dm 755 ./bin/app_process32_xposed ./squashfs-root/system/bin/app_process32
+    install -Dm 755 ./bin/dex2oat ./squashfs-root/system/bin/dex2oat
+    install -Dm 755 ./bin/oatdump ./squashfs-root/system/bin/oatdump
+    install -Dm 755 ./bin/patchoat ./squashfs-root/system/bin/patchoat
+    install -Dm 644 ./lib/libart.so ./squashfs-root/system/lib/libart.so
+    install -Dm 644 ./lib/libart-compiler.so ./squashfs-root/system/lib/libart-compiler.so
+    install -Dm 644 ./lib/libsigchain.so ./squashfs-root/system/lib/libsigchain.so
+    install -Dm 644 ./lib/libxposed_art.so ./squashfs-root/system/lib/libxposed_art.so
+    install -Dm 755 ./bin/app_process64_xposed ./squashfs-root/system/bin/app_process64
+    install -Dm 644 ./lib64/libart.so ./squashfs-root/system/lib64/libart.so
+    install -Dm 644 ./lib64/libart-compiler.so ./squashfs-root/system/lib64/libart-compiler.so
+    install -Dm 644 ./lib64/libart-disassembler.so ./squashfs-root/system/lib64/libart-disassembler.so
+    install -Dm 644 ./lib64/libsigchain.so ./squashfs-root/system/lib64/libsigchain.so
+    install -Dm 644 ./lib64/libxposed_art.so ./squashfs-root/system/lib64/libxposed_art.so
+
+    mkdir -p ./squashfs-root/system/app/XposedInstaller
+    chmod 755 ./squashfs-root/system/app/XposedInstaller
+    install -Dm 644 XposedInstaller_3.1.5.apk ./squashfs-root/system/app/XposedInstaller/XposedInstaller.apk
 }
 
 package() {

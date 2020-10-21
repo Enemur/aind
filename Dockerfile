@@ -83,8 +83,6 @@ RUN curl --retry 10 -L -o /android.img $ANDROID_IMAGE \
 FROM ${BASE}
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV VNC_PASSWORD=password
-
 RUN apt-get update && \
   apt-get install -qq -y --no-install-recommends \
 # base system
@@ -114,6 +112,7 @@ RUN mkdir -p /apk-pre.d /apk.d && \
   curl -L -o /apk-pre.d/FDroid.apk https://f-droid.org/FDroid.apk && \
   curl -L -o /apk-pre.d/firefox.apk https://ftp.mozilla.org/pub/mobile/releases/68.9.0/android-x86_64/en-US/fennec-68.9.0.en-US.android-x86_64.apk && \
   chmod 444 /apk-pre.d/*
+COPY apk/* /apk-pre.d
 COPY --from=android-img /android.img /aind-android.img
 COPY --from=anbox /anbox-binary /usr/local/bin/anbox
 COPY --from=anbox /anbox/scripts/anbox-bridge.sh /usr/local/share/anbox/anbox-bridge.sh
