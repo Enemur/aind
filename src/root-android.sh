@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /aind
+
 _gapps_list=(
     'gsfcore-all'
     'gsflogin-all'
@@ -12,12 +14,12 @@ chmod 755 ./squashfs-root/system/app/XposedInstaller
 # unpack anbox image
 mkdir -p squashfs-root
 rm -rf ./squashfs-root/*
-unsquashfs -f -d ./squashfs-root /android.img
+unsquashfs -f -d ./squashfs-root android.img
 
 # load houdini_y
 mkdir -p houdini_y
 rm -rf ./houdini_y/*
-unsquashfs -f -d ./houdini_y /houdini_y.sfs
+unsquashfs -f -d ./houdini_y ./houdini_y.sfs
 
 mkdir -p ./squashfs-root/system/lib/arm
 cp -r ./houdini_y/* ./squashfs-root/system/lib/arm
@@ -26,7 +28,7 @@ mv ./squashfs-root/system/lib/arm/libhoudini.so ./squashfs-root/system/lib/libho
 # load houdini_z
 mkdir -p houdini_z
 rm -rf ./houdini_z/*
-unsquashfs -f -d ./houdini_z /houdini_z.sfs
+unsquashfs -f -d ./houdini_z ./houdini_z.sfs
 
 mkdir -p ./squashfs-root/system/lib64/arm64
 cp -r ./houdini_z/* ./squashfs-root/system/lib64/arm64
@@ -127,7 +129,7 @@ install -Dm 644 ./lib64/libart-disassembler.so ./squashfs-root/system/lib64/liba
 install -Dm 644 ./lib64/libsigchain.so ./squashfs-root/system/lib64/libsigchain.so
 install -Dm 644 ./lib64/libxposed_art.so ./squashfs-root/system/lib64/libxposed_art.so
 
-install -Dm 644 /XposedInstaller.apk ./squashfs-root/system/app/XposedInstaller/XposedInstaller.apk
+install -Dm 644 ./XposedInstaller.apk ./squashfs-root/system/app/XposedInstaller/XposedInstaller.apk
 
 # repack image
-mksquashfs ./squashfs-root /android-rooted.img -noappend -b 131072 -comp xz -Xbcj x86
+mksquashfs ./squashfs-root android-rooted.img -noappend -b 131072 -comp xz -Xbcj x86
