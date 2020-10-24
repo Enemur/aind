@@ -12,7 +12,7 @@ chmod 755 ./squashfs-root/system/app/XposedInstaller
 # unpack anbox image
 mkdir -p squashfs-root
 rm -rf ./squashfs-root/*
-unsquashfs -f -d ./squashfs-root /aind-android.img
+unsquashfs -f -d ./squashfs-root /android.img
 
 # load houdini_y
 mkdir -p houdini_y
