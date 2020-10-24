@@ -90,13 +90,13 @@ RUN curl --retry 10 -L -o super_su.zip $SUPER_SU
 RUN curl --retry 10 -L -o xposed_tools.zip $XPOSED_TOOLS
 RUN curl --retry 10 -L -o XposedInstaller.apk $XPOSED_INSTALLER
 
-RUN unzip /super_su.zip
-RUN unzip /xposed_tools.zip
+RUN unzip ./super_su.zip
+RUN unzip ./xposed_tools.zip
 
-COPY src/codec /anbox
-COPY src/root-android.sh /anbox
-RUN chmod +x /anbox/root-android.sh
-RUN /anbox/root-android.sh
+COPY src/codec /aind
+COPY src/root-android.sh /aind
+RUN chmod +x /aind/root-android.sh
+RUN /aind/root-android.sh
 
 FROM ${BASE}
 ENV DEBIAN_FRONTEND=noninteractive
