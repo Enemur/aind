@@ -77,7 +77,7 @@ ARG ANDROID_IMAGE_SHA256
 
 RUN curl --retry 10 -L -o android.img $ANDROID_IMAGE
 
-COPY src/codec /aind
+COPY src/codec/* /aind/
 COPY src/root-android.sh /aind
 RUN chmod +x /aind/root-android.sh
 RUN /aind/root-android.sh
