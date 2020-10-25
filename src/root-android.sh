@@ -2,12 +2,32 @@
 
 cd /aind
 
+_gapps_rel="$(curl -s -L https://api.opengapps.org/list | sed -r 's/.*-x86_64-7.1-pico-([0-9]+).zip".*/\1/')"
+_gapps_src="https://downloads.sourceforge.net/project/opengapps/x86_64/$_gapps_rel/open_gapps-x86_64-7.1-pico-$_gapps_rel.zip"
+
 _gapps_list=(
     'gsfcore-all'
     'gsflogin-all'
     'gmscore-x86_64'
     'vending-x86_64'
 )
+
+HOUDINI_Y='https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_y.sfs'
+HOUDINI_Z='https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_z.sfs'
+SUPER_SU='http://supersuroot.org/downloads/SuperSU-v2.82-201705271822.zip'
+XPOSED_TOOLS='https://github.com/youling257/XposedTools/files/1931996/xposed-x86_64.zip'
+XPOSED_INSTALLER='https://forum.xda-developers.com/attachment.php?attachmentid=4393082&d=1516301692'
+
+curl --retry 10 -L -o houdini_y.sfs "$HOUDINI_Y"
+curl --retry 10 -L -o houdini_z.sfs "$HOUDINI_Z"
+curl --retry 10 -L -o super_su.zip "$SUPER_SU"
+curl --retry 10 -L -o xposed_tools.zip "$XPOSED_TOOLS"
+curl --retry 10 -L -o XposedInstaller.apk "$XPOSED_INSTALLER"
+curl --retry 10 -L -o gapps.zip "$_gapps_src"
+
+unzip ./super_su.zip
+unzip ./xposed_tools.zip
+unzip ./gapps.zip
 
 mkdir -p ./squashfs-root/system/app/XposedInstaller
 chmod 755 ./squashfs-root/system/app/XposedInstaller

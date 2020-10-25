@@ -75,23 +75,8 @@ WORKDIR /aind
 ARG ANDROID_IMAGE
 ARG ANDROID_IMAGE_SHA256
 
-ARG HOUDINI_Y=https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_y.sfs
-ARG HOUDINI_Z=https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_z.sfs
-ARG SUPER_SU=http://supersuroot.org/downloads/SuperSU-v2.82-201705271822.zip
-ARG XPOSED_TOOLS=https://github.com/youling257/XposedTools/files/1931996/xposed-x86_64.zip
-ARG XPOSED_INSTALLER=https://forum.xda-developers.com/attachment.php?attachmentid=4393082&d=1516301692
-
 RUN curl --retry 10 -L -o android.img $ANDROID_IMAGE \
     && echo $ANDROID_IMAGE_SHA256 android.img | sha256sum --check
-
-RUN curl --retry 10 -L -o houdini_y.sfs $HOUDINI_Y
-RUN curl --retry 10 -L -o houdini_z.sfs $HOUDINI_Z
-RUN curl --retry 10 -L -o super_su.zip $SUPER_SU
-RUN curl --retry 10 -L -o xposed_tools.zip $XPOSED_TOOLS
-RUN curl --retry 10 -L -o XposedInstaller.apk $XPOSED_INSTALLER
-
-RUN unzip ./super_su.zip
-RUN unzip ./xposed_tools.zip
 
 COPY src/codec /aind
 COPY src/root-android.sh /aind
