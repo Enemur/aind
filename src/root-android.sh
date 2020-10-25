@@ -100,9 +100,9 @@ rm -f ./squashfs-root/system/sbin/su
 mkdir -p ./squashfs-root/system/bin/.ext
 chmod 777 ./squashfs-root/system/bin/.ext
 install -Dm 755 ./x64/su ./squashfs-root/system/bin/.ext/.su
-install -Dm 755 ./x64/su ./squashfs-root/system/xbin/su
-install -Dm 755 ./x64/su ./squashfs-root/system/xbin/daemonsu
-install -Dm 755 ./x64/supolicy ./squashfs-root/system/xbin/supolicy
+install -Dm 755 ./x64/su ./squashfs-root/system/bin/su
+install -Dm 755 ./x64/su ./squashfs-root/system/bin/daemonsu
+install -Dm 755 ./x64/supolicy ./squashfs-root/system/bin/supolicy
 install -Dm 644 ./x64/libsupol.so ./squashfs-root/system/lib64/libsupol.so
 
 mkdir -p ./squashfs-root/system/app/SuperSU
@@ -110,13 +110,13 @@ chmod 755 ./squashfs-root/system/app/SuperSU
 install -Dm 644 ./common/Superuser.apk ./squashfs-root/system/app/SuperSU/Superuser.apk
 
 rm ./squashfs-root/system/bin/app_process
-ln -s /system/xbin/daemonsu ./squashfs-root/system/bin/app_process
+ln -s /system/bin/daemonsu ./squashfs-root/system/bin/app_process
 mv ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process64_original
-ln -s /system/xbin/daemonsu ./squashfs-root/system/bin/app_process64
+ln -s /system/bin/daemonsu ./squashfs-root/system/bin/app_process64
 cp  ./squashfs-root/system/bin/app_process64_original ./squashfs-root/system/bin/app_process_init
 
 chmod +w ./squashfs-root/system/etc/init.goldfish.sh
-echo '/system/xbin/daemonsu --auto-daemon &' >> ./squashfs-root/system/etc/init.goldfish.sh
+echo '/system/bin/daemonsu --auto-daemon &' >> ./squashfs-root/system/etc/init.goldfish.sh
 chmod -w ./squashfs-root/system/etc/init.goldfish.sh
 echo 1 > ./squashfs-root/system/etc/.installed_su_daemon
 
