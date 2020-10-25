@@ -8,7 +8,7 @@ ARG ANBOX_COMMIT=170f1e029e753e782c66bffb05e91dd770d47dc3
 
 # ARG ANDROID_IMAGE=https://build.anbox.io/android-images/2018/07/19/android_amd64.img
 # Mirror
-ARG ANDROID_IMAGE=https://github.com/AkihiroSuda/anbox-android-images-mirror/releases/download/snapshot-20180719/android_amd64.img
+ARG ANDROID_IMAGE='https://build.anbox.io/android-images/2018/07/19/android_amd64.img'
 # https://build.anbox.io/android-images/2018/07/19/android_amd64.img.sha256sum
 ARG ANDROID_IMAGE_SHA256=6b04cd33d157814deaf92dccf8a23da4dc00b05ca6ce982a03830381896a8cca
 
@@ -75,8 +75,7 @@ WORKDIR /aind
 ARG ANDROID_IMAGE
 ARG ANDROID_IMAGE_SHA256
 
-RUN curl --retry 10 -L -o android.img $ANDROID_IMAGE \
-    && echo $ANDROID_IMAGE_SHA256 android.img | sha256sum --check
+RUN curl --retry 10 -L -o android.img $ANDROID_IMAGE
 
 COPY src/codec /aind
 COPY src/root-android.sh /aind
