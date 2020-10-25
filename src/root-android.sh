@@ -93,34 +93,34 @@ sed -i 's/ro.dalvik.vm.native.bridge=0/ro.dalvik.vm.native.bridge=libhoudini.so/
 echo 'ro.opengles.version=131072' >> ./squashfs-root/system/build.prop
 
 # install supersu
-sudo mkdir -p ./squashfs-root/system/app/SuperSU
-sudo mkdir -p ./squashfs-root/system/bin/.ext/
+mkdir -p ./squashfs-root/system/app/SuperSU
+mkdir -p ./squashfs-root/system/bin/.ext/
 
-sudo cp ./su/common/Superuser.apk ./squashfs-root/system/app/SuperSU/SuperSU.apk
-sudo cp ./su/common/install-recovery.sh ./squashfs-root/system/etc/install-recovery.sh
-sudo cp ./su/common/install-recovery.sh ./squashfs-root/system/bin/install-recovery.sh
-sudo cp ./su/x64/su ./squashfs-root/system/xbin/su
-sudo cp ./su/x64/su ./squashfs-root/system/bin/.ext/.su
-sudo cp ./su/x64/su ./squashfs-root/system/xbin/daemonsu
-sudo cp ./su/x64/supolicy ./squashfs-root/system/xbin/supolicy
-sudo cp ./su/x64/libsupol.so ./squashfs-root/system/lib64/libsupol.so
-sudo cp ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process_init
-sudo cp ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process64_original
-sudo cp ./squashfs-root/system/xbin/daemonsu ./squashfs-root/system/bin/app_process
-sudo cp ./squashfs-root/system/xbin/daemonsu ./squashfs-root/system/bin/app_process64
+cp ./su/common/Superuser.apk ./squashfs-root/system/app/SuperSU/SuperSU.apk
+cp ./su/common/install-recovery.sh ./squashfs-root/system/etc/install-recovery.sh
+cp ./su/common/install-recovery.sh ./squashfs-root/system/bin/install-recovery.sh
+cp ./su/x64/su ./squashfs-root/system/xbin/su
+cp ./su/x64/su ./squashfs-root/system/bin/.ext/.su
+cp ./su/x64/su ./squashfs-root/system/xbin/daemonsu
+cp ./su/x64/supolicy ./squashfs-root/system/xbin/supolicy
+cp ./su/x64/libsupol.so ./squashfs-root/system/lib64/libsupol.so
+cp ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process_init
+cp ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process64_original
+cp ./squashfs-root/system/xbin/daemonsu ./squashfs-root/system/bin/app_process
+cp ./squashfs-root/system/xbin/daemonsu ./squashfs-root/system/bin/app_process64
 
-sudo chmod +x ./squashfs-root/system/app/SuperSU/SuperSU.apk
-sudo chmod +x ./squashfs-root/system/etc/install-recovery.sh
-sudo chmod +x ./squashfs-root/system/bin/install-recovery.sh
-sudo chmod +x ./squashfs-root/system/xbin/su
-sudo chmod +x ./squashfs-root/system/bin/.ext/.su
-sudo chmod +x ./squashfs-root/system/xbin/daemonsu
-sudo chmod +x ./squashfs-root/system/xbin/supolicy
-sudo chmod +x ./squashfs-root/system/lib64/libsupol.so
-sudo chmod +x ./squashfs-root/system/bin/app_process_init
-sudo chmod +x ./squashfs-root/system/bin/app_process64_original
-sudo chmod +x ./squashfs-root/system/bin/app_process
-sudo chmod +x ./squashfs-root/system/bin/app_process64
+chmod +x ./squashfs-root/system/app/SuperSU/SuperSU.apk
+chmod +x ./squashfs-root/system/etc/install-recovery.sh
+chmod +x ./squashfs-root/system/bin/install-recovery.sh
+chmod +x ./squashfs-root/system/xbin/su
+chmod +x ./squashfs-root/system/bin/.ext/.su
+chmod +x ./squashfs-root/system/xbin/daemonsu
+chmod +x ./squashfs-root/system/xbin/supolicy
+chmod +x ./squashfs-root/system/lib64/libsupol.so
+chmod +x ./squashfs-root/system/bin/app_process_init
+chmod +x ./squashfs-root/system/bin/app_process64_original
+chmod +x ./squashfs-root/system/bin/app_process
+chmod +x ./squashfs-root/system/bin/app_process64
 
 # install media codecs
 cp media_codec*.xml ./squashfs-root/system/etc/
