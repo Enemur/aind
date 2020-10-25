@@ -134,16 +134,22 @@ for i in ${_gapps_list[*]}; do
 done
 
 # install xposed
-install -Dm 644 ./system/xposed.prop ./squashfs-root/system/xposed.prop
-install -Dm 644 ./system/framework/XposedBridge.jar ./squashfs-root/system/framework/XposedBridge.jar
-install -Dm 755 ./system/bin/app_process32_xposed ./squashfs-root/system/bin/app_process32
-install -Dm 755 ./system/bin/dex2oat ./squashfs-root/system/bin/dex2oat
-install -Dm 755 ./system/bin/oatdump ./squashfs-root/system/bin/oatdump
-install -Dm 755 ./system/bin/patchoat ./squashfs-root/system/bin/patchoat
-install -Dm 644 ./system/lib/libart.so ./squashfs-root/system/lib/libart.so
-install -Dm 644 ./system/lib/libart-compiler.so ./squashfs-root/system/lib/libart-compiler.so
-install -Dm 644 ./system/lib/libsigchain.so ./squashfs-root/system/lib/libsigchain.so
-install -Dm 644 ./system/lib/libxposed_art.so ./squashfs-root/system/lib/libxposed_art.so
+install -Dm 644 ./xposed.prop ./squashfs-root/system/xposed.prop
+install -Dm 644 ./framework/XposedBridge.jar ./squashfs-root/system/framework/XposedBridge.jar
+install -Dm 755 ./bin/app_process32_xposed ./squashfs-root/system/bin/app_process32
+install -Dm 755 ./bin/dex2oat ./squashfs-root/system/bin/dex2oat
+install -Dm 755 ./bin/oatdump ./squashfs-root/system/bin/oatdump
+install -Dm 755 ./bin/patchoat ./squashfs-root/system/bin/patchoat
+install -Dm 644 ./lib/libart.so ./squashfs-root/system/lib/libart.so
+install -Dm 644 ./lib/libart-compiler.so ./squashfs-root/system/lib/libart-compiler.so
+install -Dm 644 ./lib/libsigchain.so ./squashfs-root/system/lib/libsigchain.so
+install -Dm 644 ./lib/libxposed_art.so ./squashfs-root/system/lib/libxposed_art.so
+install -Dm 755 ./bin/app_process64_xposed ./squashfs-root/system/bin/app_process64
+install -Dm 644 ./lib64/libart.so ./squashfs-root/system/lib64/libart.so
+install -Dm 644 ./lib64/libart-compiler.so ./squashfs-root/system/lib64/libart-compiler.so
+install -Dm 644 ./lib64/libart-disassembler.so ./squashfs-root/system/lib64/libart-disassembler.so
+install -Dm 644 ./lib64/libsigchain.so ./squashfs-root/system/lib64/libsigchain.so
+install -Dm 644 ./lib64/libxposed_art.so ./squashfs-root/system/lib64/libxposed_art.so
 
 install -Dm 644 ./XposedInstaller.apk ./squashfs-root/system/app/XposedInstaller/XposedInstaller.apk
 
