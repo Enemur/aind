@@ -25,7 +25,7 @@ curl --retry 10 -L -o xposed_tools.zip "$XPOSED_TOOLS"
 curl --retry 10 -L -o XposedInstaller.apk "$XPOSED_INSTALLER"
 curl --retry 10 -L -o gapps.zip "$_gapps_src"
 
-unzip ./super_su.zip
+unzip ./super_su.zip -d ./su
 unzip ./xposed_tools.zip
 unzip ./gapps.zip
 
@@ -93,32 +93,34 @@ sed -i 's/ro.dalvik.vm.native.bridge=0/ro.dalvik.vm.native.bridge=libhoudini.so/
 echo 'ro.opengles.version=131072' >> ./squashfs-root/system/build.prop
 
 # install supersu
-rm -f ./squashfs-root/system/bin/su
-rm -f ./squashfs-root/system/xbin/su
-rm -f ./squashfs-root/system/sbin/su
+sudo mkdir -p ./squashfs-root/system/app/SuperSU
+sudo mkdir -p ./squashfs-root/system/bin/.ext/
 
-mkdir -p ./squashfs-root/system/bin/.ext
-chmod 777 ./squashfs-root/system/bin/.ext
-install -Dm 755 ./x64/su ./squashfs-root/system/bin/.ext/.su
-install -Dm 755 ./x64/su ./squashfs-root/system/bin/su
-install -Dm 755 ./x64/su ./squashfs-root/system/bin/daemonsu
-install -Dm 755 ./x64/supolicy ./squashfs-root/system/bin/supolicy
-install -Dm 644 ./x64/libsupol.so ./squashfs-root/system/lib64/libsupol.so
+sudo cp ./su/common/Superuser.apk ./squashfs-root/system/app/SuperSU/SuperSU.apk
+sudo cp ./su/common/install-recovery.sh ./squashfs-root/system/etc/install-recovery.sh
+sudo cp ./su/common/install-recovery.sh ./squashfs-root/system/bin/install-recovery.sh
+sudo cp ./su/x64/su ./squashfs-root/system/xbin/su
+sudo cp ./su/x64/su ./squashfs-root/system/bin/.ext/.su
+sudo cp ./su/x64/su ./squashfs-root/system/xbin/daemonsu
+sudo cp ./su/x64/supolicy ./squashfs-root/system/xbin/supolicy
+sudo cp ./su/x64/libsupol.so ./squashfs-root/system/lib64/libsupol.so
+sudo cp ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process_init
+sudo cp ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process64_original
+sudo cp ./squashfs-root/system/xbin/daemonsu ./squashfs-root/system/bin/app_process
+sudo cp ./squashfs-root/system/xbin/daemonsu ./squashfs-root/system/bin/app_process64
 
-mkdir -p ./squashfs-root/system/app/SuperSU
-chmod 755 ./squashfs-root/system/app/SuperSU
-install -Dm 644 ./common/Superuser.apk ./squashfs-root/system/app/SuperSU/Superuser.apk
-
-rm ./squashfs-root/system/bin/app_process
-ln -s /system/bin/daemonsu ./squashfs-root/system/bin/app_process
-mv ./squashfs-root/system/bin/app_process64 ./squashfs-root/system/bin/app_process64_original
-ln -s /system/bin/daemonsu ./squashfs-root/system/bin/app_process64
-cp  ./squashfs-root/system/bin/app_process64_original ./squashfs-root/system/bin/app_process_init
-
-chmod +w ./squashfs-root/system/etc/init.goldfish.sh
-echo '/system/bin/daemonsu --auto-daemon &' >> ./squashfs-root/system/etc/init.goldfish.sh
-chmod -w ./squashfs-root/system/etc/init.goldfish.sh
-echo 1 > ./squashfs-root/system/etc/.installed_su_daemon
+sudo chmod +x ./squashfs-root/system/app/SuperSU/SuperSU.apk
+sudo chmod +x ./squashfs-root/system/etc/install-recovery.sh
+sudo chmod +x ./squashfs-root/system/bin/install-recovery.sh
+sudo chmod +x ./squashfs-root/system/xbin/su
+sudo chmod +x ./squashfs-root/system/bin/.ext/.su
+sudo chmod +x ./squashfs-root/system/xbin/daemonsu
+sudo chmod +x ./squashfs-root/system/xbin/supolicy
+sudo chmod +x ./squashfs-root/system/lib64/libsupol.so
+sudo chmod +x ./squashfs-root/system/bin/app_process_init
+sudo chmod +x ./squashfs-root/system/bin/app_process64_original
+sudo chmod +x ./squashfs-root/system/bin/app_process
+sudo chmod +x ./squashfs-root/system/bin/app_process64
 
 # install media codecs
 cp media_codec*.xml ./squashfs-root/system/etc/
@@ -152,4 +154,5 @@ install -Dm 644 ./lib64/libxposed_art.so ./squashfs-root/system/lib64/libxposed_
 install -Dm 644 ./XposedInstaller.apk ./squashfs-root/system/app/XposedInstaller/XposedInstaller.apk
 
 # repack image
-mksquashfs ./squashfs-root android-rooted.img -noappend -b 131072 -comp xz -Xbcj x86
+rm android.img
+mksquashfs ./squashfs-root android.img -noappend -b 131072 -comp xz -Xbcj x86
