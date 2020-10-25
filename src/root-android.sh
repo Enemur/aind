@@ -15,7 +15,7 @@ _gapps_list=(
 HOUDINI_Y='https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_y.sfs'
 HOUDINI_Z='https://github.com/redchenjs/aur-packages/raw/master/anbox-image/houdini_z.sfs'
 SUPER_SU='http://supersuroot.org/downloads/SuperSU-v2.82-201705271822.zip'
-XPOSED_TOOLS='https://dl-xda.xposed.info/framework/sdk25/x86/xposed-v89-sdk25-x86.zip'
+XPOSED_TOOLS='https://github.com/youling257/XposedTools/files/1931996/xposed-x86_64.zip'
 XPOSED_INSTALLER='https://forum.xda-developers.com/attachment.php?attachmentid=4393082&d=1516301692'
 
 curl --retry 10 -L -o houdini_y.sfs "$HOUDINI_Y"
