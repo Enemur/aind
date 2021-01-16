@@ -155,4 +155,4 @@ install -Dm 644 ./XposedInstaller.apk ./squashfs-root/system/app/XposedInstaller
 
 # repack image
 rm android.img
-mksquashfs ./squashfs-root android.img -noappend -b 131072 -comp xz -Xbcj x86
+mksquashfs ./squashfs-root /aind/android.img -noappend -b 131072 -comp xz -Xbcj x86
